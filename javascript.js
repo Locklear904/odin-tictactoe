@@ -9,7 +9,6 @@ const GameBoard = (function(){
             boardSquare.setAttribute('id', `square-${index}`);
             boardSquare.textContent = `${symbol}`;
             main.appendChild(boardSquare);
-            //boardHTML += `<div class="square" id="square-${index}">${square}</div>`;
         });
     }
 
@@ -18,24 +17,34 @@ const GameBoard = (function(){
     }
 })();
 
-/*(function(){
-    let displayController = {
-        displayUpdate() {
-            board.forEach(element => {
-                
-            });
-        }
-    }
+const createPlayer = (name, symbol) => {
     return {
-        displayUpdate
+        name,
+        symbol
+    }
+}
+
+const Game = (function(){
+    let players = [];
+    let currentPlayerIndex;
+    let gameOver;
+
+    const start = () => {
+        players = [
+            createPlayer(document.querySelector('#playerOne').value, "X"),
+            createPlayer(document.querySelector('#playerTwo').value, "O")
+        ]
+        currentPlayerIndex = 0;
+        gameOver = false;
+        GameBoard.renderBoard();
+    }
+
+    return {
+        start
     }
 })();
 
-const playerFactory = () => {
-
-}*/
-
 const startButton = document.querySelector("#startButton");
 startButton.addEventListener("click", () => {
-    //Game.start;
+    Game.start();
 });

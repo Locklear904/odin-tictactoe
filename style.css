@@ -30,3 +30,7 @@ main {
     grid-template-rows: 1fr 1fr 1fr;
     grid-template-columns: 1fr 1fr 1fr;
 }
+
+.boardSquare {
+    border: 1px solid black;
+}
