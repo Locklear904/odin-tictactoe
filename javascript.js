@@ -2,13 +2,14 @@ const GameBoard = (function(){
     let board = ["","","","","","","","",""];
     
     const renderBoard = () => {
+        //Clears the previous board
         const main = document.querySelector('main');
         while (main.firstChild) {
             main.removeChild(main.firstChild);
         }
 
         board.forEach((symbol, index) => {
-            //Creates gameboard square with class and ID for each array element, adds event listener, then appends to main grid
+            //Creates gameboard squares
             let boardSquare = document.createElement('div');
             boardSquare.classList.add('boardSquare');
             boardSquare.setAttribute('id', `square-${index}`);
@@ -23,9 +24,12 @@ const GameBoard = (function(){
         renderBoard();
     }
 
+    const getGameboard = () => board;
+
     return {
         renderBoard,
-        update
+        update,
+        getGameboard
     }
 })();
 
@@ -43,7 +47,11 @@ const Game = (function(){
 
     const handleClick = function(event) {
         let index = parseInt(event.target.id.split("-")[1]);
+        if (GameBoard.getGameboard()[index] !== "") {
+            return;
+        }
         GameBoard.update(index, players[currentPlayerIndex].symbol);
+        currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
     }
 
     const start = () => {
@@ -53,6 +61,9 @@ const Game = (function(){
         ]
         currentPlayerIndex = 0;
         gameOver = false;
+        for (let i = 0; i < 9; i++) {
+            GameBoard.update(i, "");
+        }
         GameBoard.renderBoard();
     }
 
